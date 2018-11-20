@@ -165,17 +165,15 @@ for video_type in video_types:
         video_name_f = video_name.split('.txt')[0]
         video_name_new = video_name.split('..txt')[0]
         mask_names = os.listdir(segmentation_base + video_type + '/' + video_name + '/')
-            for mask_name in mask_names:
-                frame_name = mask_name.split('_mask')+[0] + '.bmp'
-                f = open(frames_base + '/' + video_type + '/' + video_name_f + '/' + frame_name,'rb')
-                frame = Image.open(f)
-                mask = blur.getMask(segmentation_base + video_type + '/' + video_name + '/' + mask_name)
-                new = processed_base + '/' + video_type + '/' + video_name_new + '/' 
-                image = blur.filter(frame,mask,temp)
-                if not os.path.exists(new):
-                    os.makedirs(new)
-                image.save(new + frame_name)
-                f.close()
-                print('generating---'+ new + frame_name)
-
-                
+        for mask_name in mask_names:
+            frame_name = mask_name.split('_mask')[0] + '.bmp'
+            f = open(frames_base + '/' + video_type + '/' + video_name_f + '/' + frame_name,'rb')
+            frame = Image.open(f)
+            mask = blur.getMask(segmentation_base + video_type + '/' + video_name + '/' + mask_name)
+            new = processed_base + '/' + video_type + '/' + video_name_new + '/' 
+            image = blur.filter(frame,mask,temp)
+            if not os.path.exists(new):
+                os.makedirs(new)
+            image.save(new + frame_name)
+            f.close()
+            print('generating---'+ new + frame_name)

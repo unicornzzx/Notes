@@ -49,105 +49,106 @@ class Blur():
             column = position[1]
             for k in range (3):
                 t = np.zeros((self.sideLength, self.sideLength))
+                
                 if row < self.radius:#filter上方有几行px会定位在图片之外
                     if column < self.radius:#左 上
                         for i in range(self.radius - column):#filter前r-column列的px，列数为[0,r-column-1]
-                            for j in range (self.sideLength):
-                                if j < (self.radius - row):#行数为[0,r-row-1]的px
-                                    #镜像
-                                    t[j][i]=raw[row+self.radius-j][column+self.radius-i][k]
-                                else: #垂直轴对称 行数为[r-row,sideLength-1]的px
-                                    t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                            for j in range(self.radius - row):
+                                #镜像
+                                t[j][i]=raw[row+self.radius-j][column+self.radius-i][k]
+                            for j in range(self.radius - row, self.sideLength):
+                                #垂直轴对称 行数为[r-row,sideLength-1]的px
+                                t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
                         for i in range(self.radius - column,self.sideLength):#filter第r-column列之后的px,列数为[r-column,sideLength-1]
-                            for j in range (self.sideLength):
-                                if j <(self.radius - row):#行数为[0,r-row-1]的px
-                                    #水平轴对称
-                                    t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
-                                else:#直接取  行数为[r-row,sideLength-1]的px
-                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                            for j in range(self.radius - row):
+                                #行数为[0,r-row-1]的px
+                                #水平轴对称
+                                t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
+                            for j in range(self.radius - row, self.sideLength):
+                                #直接取  行数为[r-row,sideLength-1]的px
+                                t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]                      
+
                     elif column > maxColumn:#右 上
                         for i in range(self.sideLength - (column - maxColumn)):#px的列数为[0,sideLength-(column-maxColumn)-1]
-                            for j in range (self.sideLength):
-                                if j < (self.radius - row):#行数为[0,r-row-1]的px
-                                    #水平轴对称
-                                    t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
-                                else: #直接取
-                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                            for j in range (self.radius - row):
+                                #水平轴对称
+                                t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
+                            for j in range(self.radius - row,self.sideLength):#直接取
+                                t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
                         for i in range(self.sideLength - (column - maxColumn),self.sideLength):#px的列数为[sideLength-(column-maxColumn),sideLength-1]
-                            for j in range (self.sideLength):
-                                if j <(self.radius - row):#行数为[0,r-row-1]的px
-                                    #镜像
-                                    t[j][i]=raw[row+self.radius-j][column+self.radius-i][k]
-                                else:#垂直轴对称
-                                    t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                            for j in range(self.radius - row):#行数为[0,r-row-1]的px
+                                #镜像
+                                t[j][i]=raw[row+self.radius-j][column+self.radius-i][k]
+                            for j in range(self.radius - row,self.sideLength):
+                                #垂直轴对称
+                                t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                                    
                     else:# 仅上
                         for i in range(self.sideLength):
-                            for j in range(self.sideLength):
-                                if j < (self.radius - row):
-                                    t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
-                                else:
-                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                            for j in range(self.radius - row):
+                                t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]#水平轴对称
+                            for j in range(self.radius - row,self.sideLength):#直接取
+                                t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
                                     
                 elif row > maxRow:#filter下方有几行px会定位在图片之外
                     if column < self.radius:#左 下
                         for i in range(self.radius - column):#filter前r-column列的px，列数为[0,r-column-1]
-                            for j in range (self.sideLength):
-                                if j < (self.sideLength - (row - maxRow)-1):#px的行数为[0,sideLength-(row-maxRow)-1]
-                                    #垂直轴对称
-                                    t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
-                                else: #镜像 #px的行数为[sideLength-(row-maxRow),sideLength-1]
-                                    t[j][i]=raw[row+self.radius-j][column+self.radius-i][k]
+                            for j in range (self.sideLength - (row - maxRow)):
+                                #px的行数为[0,sideLength-(row-maxRow)-1]
+                                #垂直轴对称
+                                t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                            for j in range (self.sideLength - (row - maxRow),self.sideLength): #镜像 #px的行数为[sideLength-(row-maxRow),sideLength-1]
+                                t[j][i]=raw[row+self.radius-j][column+self.radius-i][k]
                         for i in range(self.radius - column,self.sideLength):#filter第r-column之后列的px,列数为[r-column,sideLength-1]
-                            for j in range (self.sideLength):
-                                if j <(self.sideLength - (row - maxRow)-1):#px的行数为[0,sideLength-(row-maxRow)-1]
-                                    #直接取
-                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
-                                else:#水平轴对称 #px的行数为[sideLength-(row-maxRow),sideLength-1]
-                                    t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
+                            for j in range (self.sideLength - (row - maxRow)):
+                                #px的行数为[0,sideLength-(row-maxRow)-1]
+                                #直接取
+                                t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                            for j in range (self.sideLength - (row - maxRow),self.sideLength):#水平轴对称 #px的行数为[sideLength-(row-maxRow),sideLength-1]
+                                t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
+                                
                     elif column > maxColumn:#右 下
                         for i in range(self.sideLength - (column - maxColumn)):#px的列数为[0,sideLength-(column-maxColumn)-1]
-                            for j in range (self.sideLength):
-                                if j <(self.sideLength - (row - maxRow)-1):#px的行数为[0,sideLength-(row-maxRow)-1]
-                                    #直接取
-                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
-                                else: #水平轴对称 #px的行数为[sideLength-(row-maxRow),sideLength-1]
-                                    t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
+                            for j in range (self.sideLength - (row - maxRow)):
+                                #px的行数为[0,sideLength-(row-maxRow)-1]
+                                #直接取
+                                t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                            for j in range (self.sideLength - (row - maxRow),self.sideLength): #水平轴对称 #px的行数为[sideLength-(row-maxRow),sideLength-1]
+                                t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
                         for i in range(self.sideLength - (column - maxColumn),self.sideLength):#px的列数为[sideLength-(column-maxColumn),sideLength-1]
-                            for j in range (self.sideLength):
-                                if j <(self.sideLength - (row - maxRow)-1):#px的行数为[0,sideLength-(row-maxRow)-1]
-                                    #垂直轴对称
-                                    t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
-                                else:#镜像 #px的行数为[sideLength-(row-maxRow),sideLength-1]
-                                    t[j][i]=raw[row+self.radius-j][column+self.radius-i][k]
+                            for j in range (self.sideLength - (row - maxRow)):
+                                #px的行数为[0,sideLength-(row-maxRow)-1]
+                                #垂直轴对称
+                                t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                            for j in range (self.sideLength - (row - maxRow),self.sideLength):#镜像 #px的行数为[sideLength-(row-maxRow),sideLength-1]
+                                t[j][i]=raw[row+self.radius-j][column+self.radius-i][k]
+                                
                     else:#仅下
                         for i in range(self.sideLength):
-                            for j in range(self.sideLength):
-                                if j < (self.sideLength - (row - maxRow)-1):
-                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
-                                else:
-                                    t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
+                            for j in range(self.sideLength - (row - maxRow)):
+                                t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                            for j in range(self.sideLength - (row - maxRow),self.sideLength):
+                                t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
                                     
                 elif column < self.radius: #仅左
-                        for j in range (self.sideLength):
-                            if j <(self.radius - column):
-                                for i in range(self.sideLength):
-                                    #垂直轴对称
-                                    t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
-                            else:
-                                for i in range(self.sideLength):
-                                    #直接取
-                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                    for i in range(self.radius - column):
+                        for j in range(sideLength):
+                            #垂直轴对称
+                            t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                    for i in range(self.radius-column,self.sideLength):
+                        for j in range(self.sideLength):
+                            #直接取
+                            t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
                                          
                 elif column > maxColumn: #仅右
-                        for j in range (self.sideLength):
-                            if j < (self.sideLength - (row - maxRow)-1):
-                                for i in range(self.sideLength):
-                                    #直接取
-                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
-                            else:
-                                for i in range(self.sideLength):
-                                    #垂直轴对称
-                                    t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                    for i in range(self.sideLength - (column - maxColumn)):
+                        for j in range(self.sideLength):
+                            #直接取
+                            t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                    for i in range(self.sideLength - (column - maxColumn),self.sideLength):
+                        for j in range(self.sideLength):
+                            #垂直轴对称
+                            t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
                                     
                 else:#filter全取在图像内
                     t = raw[row-self.radius:row+self.radius+1, column-self.radius:column+self.radius+1,k]

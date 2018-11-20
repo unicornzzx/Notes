@@ -126,6 +126,29 @@ class Blur():
                                     t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
                                 else:
                                     t[j][i]=raw[row+self.radius-j][column-self.radius+i][k]
+                                    
+                elif column < self.radius: #仅左
+                        for j in range (self.sideLength):
+                            if j <(self.radius - column):
+                                for i in range(self.sideLength):
+                                    #垂直轴对称
+                                    t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                            else:
+                                for i in range(self.sideLength):
+                                    #直接取
+                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                                         
+                elif column > maxColumn: #仅右
+                        for j in range (self.sideLength):
+                            if j < (self.sideLength - (row - maxRow)-1):
+                                for i in range(self.sideLength):
+                                    #直接取
+                                    t[j][i]=raw[row-self.radius+j][column-self.radius+i][k]
+                            else:
+                                for i in range(self.sideLength):
+                                    #垂直轴对称
+                                    t[j][i]=raw[row-self.radius+j][column+self.radius-i][k]
+                                    
                 else:#filter全取在图像内
                     t = raw[row-self.radius:row+self.radius+1, column-self.radius:column+self.radius+1,k]
 
@@ -165,15 +188,17 @@ for video_type in video_types:
         video_name_f = video_name.split('.txt')[0]
         video_name_new = video_name.split('..txt')[0]
         mask_names = os.listdir(segmentation_base + video_type + '/' + video_name + '/')
-        for mask_name in mask_names:
-            frame_name = mask_name.split('_mask')[0] + '.bmp'
-            f = open(frames_base + '/' + video_type + '/' + video_name_f + '/' + frame_name,'rb')
-            frame = Image.open(f)
-            mask = blur.getMask(segmentation_base + video_type + '/' + video_name + '/' + mask_name)
-            new = processed_base + '/' + video_type + '/' + video_name_new + '/' 
-            image = blur.filter(frame,mask,temp)
-            if not os.path.exists(new):
-                os.makedirs(new)
-            image.save(new + frame_name)
-            f.close()
-            print('generating---'+ new + frame_name)
+            for mask_name in mask_names:
+                frame_name = mask_name.split('_mask')+[0] + '.bmp'
+                f = open(frames_base + '/' + video_type + '/' + video_name_f + '/' + frame_name,'rb')
+                frame = Image.open(f)
+                mask = blur.getMask(segmentation_base + video_type + '/' + video_name + '/' + mask_name)
+                new = processed_base + '/' + video_type + '/' + video_name_new + '/' 
+                image = blur.filter(frame,mask,temp)
+                if not os.path.exists(new):
+                    os.makedirs(new)
+                image.save(new + frame_name)
+                f.close()
+                print('generating---'+ new + frame_name)
+
+                

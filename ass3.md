@@ -1,6 +1,6 @@
 #### question1
 commond line: ```> use class //create db class```   
-screen shot:
+screen shot: <img src="images/1.png" height="380px" hspace="20px" />
 
 #### question2
 command line: 

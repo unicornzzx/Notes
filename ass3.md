@@ -1,11 +1,12 @@
 ### question1
-commond line: ```> use class //create db class```   
+commond lines: ```> use class //create db class```   
 screen shot:
 <center>
 <img src="images/1.PNG" />
 </center>
+
 ### question2
-command line: 
+command lines: 
 ```
 > use class     //switch to db class
 > db.createCollection("students")       //create collection students
@@ -27,7 +28,7 @@ command line:
 screen shot:
 
 ### question3
-command line:
+command lines:
 ```
 > use class  //switch to db "class"
 > db.students.find({"address":"Beijing"})   //find objects without updating
@@ -37,27 +38,27 @@ command line:
 screen shot
 
 ### question4
-command line:
+command lines:
 ```
 > use class
 > db.students.find({},{"age":0,"_id":0})
 ```
 
 ### question5
-command line:
+command lines:
 ```
 > use class
 > db.students.find({"age":{$lte:25, $gte:20}})
 ```
 ### question6
-command line:
+command lines:
 ```
 > use class
 > db.students.find().sort({"age":1}).limit(3)
 ```
 
 ### question7
-command line:
+command lines:
 ```
 > use class
 > db.students.createIndex({"name":1},{unique:true})

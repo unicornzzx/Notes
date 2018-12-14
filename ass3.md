@@ -1,8 +1,10 @@
-#### question1
+### question1
 commond line: ```> use class //create db class```   
-screen shot: <img src="images/1.PNG" />
-
-#### question2
+screen shot:
+<center>
+<img src="images/1.PNG" />
+</center>
+### question2
 command line: 
 ```
 > use class     //switch to db class
@@ -24,7 +26,7 @@ command line:
 ```
 screen shot:
 
-#### question3
+### question3
 command line:
 ```
 > use class  //switch to db "class"
@@ -34,34 +36,34 @@ command line:
 ```
 screen shot
 
-#### question4
+### question4
 command line:
 ```
 > use class
 > db.students.find({},{"age":0,"_id":0})
 ```
 
-#### question5
+### question5
 command line:
 ```
 > use class
 > db.students.find({"age":{$lte:25, $gte:20}})
 ```
-#### question6
+### question6
 command line:
 ```
 > use class
 > db.students.find().sort({"age":1}).limit(3)
 ```
 
-#### question7
+### question7
 command line:
 ```
 > use class
 > db.students.createIndex({"name":1},{unique:true})
 ```
 
-#### question8
+### question8
 command lines:
 ```
 > use class

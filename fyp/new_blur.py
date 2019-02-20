@@ -38,7 +38,7 @@ class Blur():
         return result/all
     
 
-    def control(self, video_name)
+    def control(self, video_name):
         time1 = time.time()
         video_type = video_name.split('_')[1]
         mask_names = os.listdir(self.segmentation_base + type + '/' + video_name)

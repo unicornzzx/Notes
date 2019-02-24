@@ -206,11 +206,7 @@ def calc(sigema,x,y):
     res1=1/(2*math.pi*sigema*sigema)
     res2=math.exp(-(x*x+y*y)/(2*sigema*sigema))
     return res1*res2
-'''
-def hhh(self,s):
-    a = s[0:-1]
-    print(a)
-'''
+
 if __name__=='__main__':
     r=10 #模版半径，自己自由调整
     s=50 #sigema数值，自己自由调整

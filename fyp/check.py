@@ -1,5 +1,5 @@
 import os
-
+ 
 frames_base = '/media/zzx/DATA1/segmentation' #两个需要比较的目录
 processed_base = '/media/zzx/DATA1/processed'
 

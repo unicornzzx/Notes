@@ -70,14 +70,15 @@ def main(unused_argv):
 
   for pred_dict, image_path in zip(predictions, frames):
     print('original:', image_path)
-    path_to_output = image_path.replace('frames','segmentation')+'_mask.png'
+    path_to_output = image_path.replace('frames','segmentation').replace('.bmp','_mask.png')
+    '''
     print("generating: ", path_to_output)
     mask = pred_dict['decoded_labels']
     mask = Image.fromarray(mask)
     plt.axis('off')
     plt.imshow(mask)
     plt.savefig(path_to_output, bbox_inches='tight')
-
+    '''
   f.close()
   
   

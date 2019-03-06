@@ -14,11 +14,12 @@ for video_type in video_types:
         masks = os.listdir(os.path.join(segmentation_base,video_type,video_name))
         if (len(frames) != len(masks)):
             for frame in frames:
+                frame = os.path.join(frames_base, video_type, video_name, frame)
                 mask = os.path.join(segmentation_base, video_type, video_name, frame)
-                if !os.path.exist(mask):
-                    f.write(mask)
+                if not os.path.exist(mask):
+                    f.write(frame)
                     f.next()
-                    print('--------Add: '+ mask)
+                    print('--------Add: '+ frame)
             print('Done: '+ video_name)        
 
 f.close()

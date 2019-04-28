@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+my_array=('WallPushups' 'Rowing' 'Drumming' 'PommelHorse' 'CricketBowling' 'TrampolineJumping' 'Kayaking' 'CricketShot' 'Basketball' 'Diving' 'HammerThrow' 'CuttingInKitchen' 'BoxingPunchingBag' 'StillRings' 'SkyDiving' 'PizzaTossing' 'BabyCrawling' 'FloorGymnastics' 'ShavingBeard' 'BlowingCandles' 'BoxingSpeedBag' 'Billiards' 'HandstandWalking' 'Knitting' 'Shotput' 'PlayingDhol' 'IceDancing' 'BlowDryHair' 'BasketballDunk' 'ThrowDiscus' 'SkateBoarding' 'PlayingTabla' 'Surfing' 'WalkingWithDog' 'HorseRace' 'HighJump' 'FieldHockeyPenalty' 'WritingOnBoard' 'FrontCrawl' 'PoleVault' 'PlayingSitar' 'TaiChi' 'UnevenBars' 'Biking' 'Hammering' 'JumpRope' 'BreastStroke' 'JumpingJack' 'RopeClimbing' 'GolfSwing' 'FrisbeeCatch' 'YoYo' 'Mixing' 'SoccerJuggling' 'Skijet' 'JavelinThrow' 'VolleyballSpiking' 'BodyWeightSquats' 'JugglingBalls' 'TennisSwing' 'BalanceBeam' 'PlayingDaf' 'SoccerPenalty' 'ParallelBars' 'Haircut' 'PlayingPiano' 'Fencing' 'BaseballPitch' 'ApplyLipstick' 'HandstandPushups' 'Lunges' 'PlayingCello' 'SalsaSpin' 'Skiing' 'LongJump' 'Punch' 'Typing' 'HeadMassage' 'Rafting' 'CliffDiving' 'BandMarching' 'PlayingGuitar' 'PushUps' 'Archery' 'RockClimbingIndoor' 'BrushingTeeth' 'CleanAndJerk' 'BenchPress' 'PlayingFlute' 'HulaHoop' 'Nunchucks' 'Swing' 'Bowling' 'PlayingViolin' 'HorseRiding' 'MilitaryParade' 'TableTennisShot' 'MoppingFloor' 'SumoWrestling' 'PullUps')
+for var in ${my_array[*]}
+do
+    in_path="/home/lab/Optical-Flow-Guided-Feature-master/UCF-101/${var}"
+    out_path="/home/lab/Optical-Flow-Guided-Feature-master/frames_optical_flow/${var}"
+    echo "Extracting optical flow from videos in folder: ${in_path}"
+    python tools/build_of.py ${in_path} ${out_path} --num_worker 2 --new_width 340 --new_height 256 2>local/errors.log
+done

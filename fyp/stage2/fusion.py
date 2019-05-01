@@ -12,15 +12,17 @@ def proc(video_type):
     print("Staring:-----------------------" + video_type)
     video_names = os.listdir(os.path.join(frames_base, video_type))
     output_type_path = os.path.join(output_base,video_type)
-    os.makedirs(output_type_path)
+    if not os.path.isdir(output_type_path): 
+        os.makedirs(output_type_path)
 
     for video_name in video_names:
         time1 =time.time()
         frames_folder = os.path.join(frames_base, video_type, video_name)
         frames = os.listdir(frames_folder) #此方法生成的list并不是按照帧的顺序
-
+        example_frame = frames[0]
+        img = cv2.imread(os.path.join(frames_base, video_type, video_name, example_frame))
         fps = 25
-        size = (320,240)
+        size = (img.shape[1],img.shape[0])
         video_name = frames_folder.split("\\")[-1] + ".avi"
         output_path = os.path.join(output_type_path, video_name) 
         fourcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
